@@ -23,6 +23,11 @@ const server = http.createServer((req, res) => {
   // Send the response
   res.end("hello world")
 
+  // Get the headers
+
+  const headers = req.headers
+  console.log(headers)
+
 
   // Log the user request path
 
