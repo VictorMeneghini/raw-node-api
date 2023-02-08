@@ -39,17 +39,32 @@ const server = http.createServer((req, res) => {
     res.end("hello world")
   })
 
-
-
-
-
-
   // Get the headers
   const headers = req.headers
   // console.log(headers)
 
 })
 
+// handlers 
+const handlers = {
+  sample: (data, cb) => {
+    //cb a http status code, and a payload object
+    cb(406, {"name": "sample handler"})
+
+  },
+  notFound: (data, cb) => {
+    cb(404)
+  }
+}
+
+const router = {
+  "sample": handlers.sample
+}
+
+
+handlers.sample("my data", (statusCode) => {
+  console.log(statusCode)
+})
 
 // start server
 server.listen(3000, () => {
