@@ -25,23 +25,40 @@ const server = http.createServer((req, res) => {
   const decoder = new StringDecoder("utf-8")
   let buffer = ''
 
+  // Get the headers
+  const headers = req.headers
+  // console.log(headers)
+
   req.on("data", (data) => {
-    console.log(data)
     buffer += decoder.write(data)
-    console.log(buffer, "on data")
   })
 
   req.on("end", () => {
     buffer += decoder.end()
 
-    // Send the response
-    console.log(buffer, "on end")
-    res.end("hello world")
+    const chosenHandler = typeof(router[trimmedPath]) !== "undefined" ? router[trimmedPath] : handlers.notFound
+
+    // contruct data object
+
+    const data = {
+      trimmedPath,
+      queryStringObject,
+      method,
+      headers,
+      payload: buffer
+    }
+
+    // route request
+    chosenHandler(data, (statusCode, payload) => {
+      
+      res.writeHead(statusCode)
+      res.end(JSON.stringify(payload))
+
+    })
+
   })
 
-  // Get the headers
-  const headers = req.headers
-  // console.log(headers)
+  
 
 })
 
@@ -49,16 +66,17 @@ const server = http.createServer((req, res) => {
 const handlers = {
   sample: (data, cb) => {
     //cb a http status code, and a payload object
-    cb(406, {"name": "sample handler"})
+    cb(200, data)
 
   },
   notFound: (data, cb) => {
-    cb(404)
+    cb(404, "Dont found")
   }
 }
 
 const router = {
-  "sample": handlers.sample
+  sample: handlers.sample,
+  notFound: handlers.notFound
 }
 
 
