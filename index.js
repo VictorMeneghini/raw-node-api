@@ -36,7 +36,7 @@ const server = http.createServer((req, res) => {
   req.on("end", () => {
     buffer += decoder.end()
 
-    const chosenHandler = typeof(router[trimmedPath]) !== "undefined" ? router[trimmedPath] : handlers.notFound
+    const chosenHandler = router[trimmedPath] ? router[trimmedPath] : handlers.notFound
 
     // contruct data object
 
@@ -51,6 +51,7 @@ const server = http.createServer((req, res) => {
     // route request
     chosenHandler(data, (statusCode, payload) => {
       
+      res.setHeader("Content-Type", "application-json")
       res.writeHead(statusCode)
       res.end(JSON.stringify(payload))
 
