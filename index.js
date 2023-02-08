@@ -2,6 +2,9 @@
 const http = require("http")
 const { StringDecoder } = require("string_decoder")
 const url = require("url")
+const config = require("./config")
+
+console.log(config)
 
 // Server
 const server = http.createServer((req, res) => {
@@ -86,6 +89,6 @@ handlers.sample("my data", (statusCode) => {
 })
 
 // start server
-server.listen(3000, () => {
-  console.log("The server is running on port 3000")
+server.listen(config.port, () => {
+  console.log(`The server is running on port ${config.port}`)
 })
