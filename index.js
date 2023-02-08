@@ -1,5 +1,6 @@
 // Dependencies
 const http = require("http")
+const { StringDecoder } = require("string_decoder")
 const url = require("url")
 
 // Server
@@ -14,22 +15,38 @@ const server = http.createServer((req, res) => {
 
   // Get the querystring as an object
   const queryStringObject = parsedUrl.query
-  console.log(queryStringObject)
+  // console.log(queryStringObject)
 
   // Get HTTP method
   const method = req.method.toLowerCase()
-  console.log(method)
+  // console.log(method)
 
-  // Send the response
-  res.end("hello world")
+  // Get the paylaod
+  const decoder = new StringDecoder("utf-8")
+  let buffer = ''
+
+  req.on("data", (data) => {
+    console.log(data)
+    buffer += decoder.write(data)
+    console.log(buffer, "on data")
+  })
+
+  req.on("end", () => {
+    buffer += decoder.end()
+
+    // Send the response
+    console.log(buffer, "on end")
+    res.end("hello world")
+  })
+
+
+
+
+
 
   // Get the headers
-
   const headers = req.headers
-  console.log(headers)
-
-
-  // Log the user request path
+  // console.log(headers)
 
 })
 
