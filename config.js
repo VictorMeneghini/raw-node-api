@@ -3,9 +3,9 @@ const environments = {
 
 }
 
-// Staging (default) environment
+// development (default) environment
 
-environments.staging = {
+environments.development = {
   httpPort: 3000,
   httpsPort: 3001,
   envName: "staging"
@@ -14,12 +14,12 @@ environments.staging = {
 // Production environment
 environments.production = {
   httpPort: 5000,
-  httpsPort: 50001,
+  httpsPort: 5001,
   envName: "production"
 }
 
 // Dertemine which enviroment was passed as a command-line argument
-const currentEnvironment = process.env.NODE_ENV === "production" ? "production" : "staging"
+const currentEnvironment = process.env.NODE_ENV === "production" ? "production" : "development"
 
 
 module.exports = environments[currentEnvironment]
