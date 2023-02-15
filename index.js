@@ -6,6 +6,17 @@ const nodePath = require("path")
 const { StringDecoder } = require("string_decoder")
 const url = require("url")
 const config = require("./config")
+const _data = require("./lib/data")
+
+// @TODO delete this
+// _data.create("test", "newFile", {hello: "hi there"}, (err) => {
+//   console.log(err)
+// })
+
+_data.read("test", "newFile", (err, data) => {
+  console.log(err, data)
+})
+
 
 console.log(config)
 
