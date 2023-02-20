@@ -1,14 +1,18 @@
 // Dependencies
-const http = require("http")
-const https = require("https")
-const fs = require("fs")
-const nodePath = require("path")
-const { StringDecoder } = require("string_decoder")
-const url = require("url")
-const config = require("./config")
-const handlers = require("./lib/handlers")
-const _data = require("./lib/data")
+import http from "http"
+import https from "https"
+import fs from "fs"
+import nodePath from "path"
+import { StringDecoder } from "string_decoder"
+import url from "url"
+import config from "./config.mjs"
+import handlers from "./lib/handlers.mjs"
 
+// ModuleA.js
+import { getDirName } from './utils/index.mjs'
+
+// Getting the dirname of moduleA.js
+const dirName = getDirName(import.meta.url)
 
 // Server
 const server = http.createServer((req, res) => {
@@ -16,8 +20,8 @@ const server = http.createServer((req, res) => {
 })
 
 const httpsOptions = {
-  key: fs.readFileSync(nodePath.join(__dirname, "https", "key.pem")),
-  cert: fs.readFileSync(nodePath.join(__dirname, "https", "cert.pem")),
+  key: fs.readFileSync(nodePath.join(dirName, "https", "key.pem")),
+  cert: fs.readFileSync(nodePath.join(dirName, "https", "cert.pem")),
 }
 
 const httpsServer = https.createServer(httpsOptions, (req, res) => {

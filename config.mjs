@@ -1,6 +1,5 @@
 // container for all enviroments
 const environments = {
-
 }
 
 // development (default) environment
@@ -18,8 +17,8 @@ environments.production = {
   envName: "production"
 }
 
-// Dertemine which enviroment was passed as a command-line argument
+// Determine which environment was passed as a command-line argument
 const currentEnvironment = process.env.NODE_ENV === "production" ? "production" : "development"
 
 
-module.exports = environments[currentEnvironment]
+export default environments[currentEnvironment]
