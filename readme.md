@@ -4,6 +4,8 @@
 
 The goal of this project is to build an API using only Node.js and its functionalities without using external libraries and thus, understand how current frameworks work.
 
+During the development of the project, the file system was used to manage the CRUD of the information and stored it locally. In a real application this module would be replaced by a conventional database.
+
 
 |knowledge|Links|  
 |---|---|

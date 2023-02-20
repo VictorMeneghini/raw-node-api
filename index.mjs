@@ -73,25 +73,13 @@ const handlerRequest = (req, res) => {
     }
 
     // route request
-    chosenHandler(data, (statusCode, payload) => {
-      
-      res.setHeader("Content-Type", "application-json")
-      res.writeHead(statusCode)
-      res.end(JSON.stringify(payload))
-
-    })
-
+    chosenHandler(data.payload, req, res)
   })
 }
 
-
-
 const router = {
-  ping: handlers.ping,
   users: handlers.users,
-  notFound: handlers.notFound,
 }
-
 
 // start server
 server.listen(config.httpPort, () => {
