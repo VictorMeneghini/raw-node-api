@@ -6,9 +6,9 @@ const nodePath = require("path")
 const { StringDecoder } = require("string_decoder")
 const url = require("url")
 const config = require("./config")
+const handlers = require("./lib/handlers")
+const _data = require("./lib/data")
 
-
-console.log(config)
 
 // Server
 const server = http.createServer((req, res) => {
@@ -80,21 +80,12 @@ const handlerRequest = (req, res) => {
   })
 }
 
-// handlers 
-const handlers = {
-  ping: (data, cb) => {
-    //cb a http status code, and a payload object
-    cb(200, "server alive" )
 
-  },
-  notFound: (data, cb) => {
-    cb(404, "Dont found")
-  }
-}
 
 const router = {
   ping: handlers.ping,
-  notFound: handlers.notFound
+  users: handlers.users,
+  notFound: handlers.notFound,
 }
 
 
